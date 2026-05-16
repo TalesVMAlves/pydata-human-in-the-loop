@@ -1,0 +1,13 @@
+usuario:
+  email: "tales.v.m.alves@gmail.com"
+
+gmail_api:
+  # O escopo 'modify' permite ler e também alterar o estado do emails (como mover para lixeira)
+  scopes: 
+    - "https://www.googleapis.com/auth/gmail.modify"
+  credentials_file: "credentials.json"
+  token_file: "token.json"
+
+llm:
+  model: "gpt-5.4-nano"
+  temperature: 0.0
