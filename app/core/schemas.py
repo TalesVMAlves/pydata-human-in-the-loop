@@ -1,11 +1,11 @@
 from typing import Annotated, List
 from typing_extensions import TypedDict
 from pydantic import BaseModel, Field
-from langgraph.graph.message import add_messages
+from langgraph.graph import MessagesState
 
-class AgentState(TypedDict):
-    ## O add_messages garante que novas mensagens sejam anexadas, e não sobrescritas
-    messages: Annotated[list, add_messages]
+## Herdamos da classe MessagesState -> messages: Annotated[list[AnyMessage], add_messages]
+## O add_messages garante que novas mensagens sejam anexadas, e não sobrescritas
+class AgentState(MessagesState):
     ## Guarda o resumo da caixa de entrada globalmente
     contexto_emails: str
 
