@@ -1,5 +1,4 @@
-from typing import Annotated, List
-from typing_extensions import TypedDict
+from typing import List
 from pydantic import BaseModel, Field
 from langgraph.graph import MessagesState
 
