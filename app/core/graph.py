@@ -60,7 +60,7 @@ def carregar_contexto_inicial(state: AgentState):
     return {} 
 
 ## A partir do valor do Agente email decide o fluxo dos dados
-def roteador(state: AgentState) -> Literal["Executar_Leitura", "Executar_Planejamento", "Executar_Sensíveis", "__end__"]:
+def roteador(state: AgentState) -> Literal["Executar_Seguro", "Executar_Revisáveis", "Executar_Sensíveis", "__end__"]:
     ultima = state["messages"][-1]
     if not ultima.tool_calls:
         return END
@@ -70,24 +70,24 @@ def roteador(state: AgentState) -> Literal["Executar_Leitura", "Executar_Planeja
     if nome_ferramenta in ["apagar_spam", "enviar_email"]:
         return "Executar_Sensíveis"
     elif nome_ferramenta == "preparar_respostas_em_lote":
-        return "Executar_Planejamento"
+        return "Executar_Revisáveis"
     else:
-        return "Executar_Leitura"
+        return "Executar_Seguro"
 
 ## Criação do grafo e adição dos nós
 workflow = StateGraph(AgentState)
 workflow.add_node("Carregar_Contexto", carregar_contexto_inicial)
 workflow.add_node("Agente_Email", agente_email)
-workflow.add_node("Executar_Leitura", ToolNode(ferramentas_leitura))
-workflow.add_node("Executar_Planejamento", ToolNode(ferramentas_planeamento))
+workflow.add_node("Executar_Seguro", ToolNode(ferramentas_leitura))
+workflow.add_node("Executar_Revisáveis", ToolNode(ferramentas_planeamento))
 workflow.add_node("Executar_Sensíveis", ToolNode(ferramentas_sensiveis))
 
 ## Adição das arestas e arestas condicionais
 workflow.add_edge(START, "Carregar_Contexto")
 workflow.add_edge("Carregar_Contexto", "Agente_Email")
 workflow.add_conditional_edges("Agente_Email", roteador)
-workflow.add_edge("Executar_Leitura", "Agente_Email")
-workflow.add_edge("Executar_Planejamento", "Agente_Email")
+workflow.add_edge("Executar_Seguro", "Agente_Email")
+workflow.add_edge("Executar_Revisáveis", "Agente_Email")
 workflow.add_edge("Executar_Sensíveis", "Agente_Email")
 
 ## Necessário se for executar via CLI
@@ -96,7 +96,7 @@ workflow.add_edge("Executar_Sensíveis", "Agente_Email")
 ## Adiciona a memória e as travas do Human-in-the-loop
 agente_email = workflow.compile(
     # checkpointer=memoria,
-    interrupt_after=["Executar_Planejamento"],
+    interrupt_after=["Executar_Revisáveis"],
     interrupt_before=["Executar_Sensíveis"] 
 )
 
