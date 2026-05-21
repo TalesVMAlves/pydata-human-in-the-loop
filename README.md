@@ -24,3 +24,10 @@ cp .env.example .env
 O LangGraph Studio é uma das melhores formas de visualizar os breakpoints (`interrupt_after` e `interrupt_before`) em tempo real. 
 
 [Como configurar e executar o Studio](docs/langgraph_studio.md). 
+
+### 4. Execução CLI
+Eu trabalhei menos nessa alternativa, já que o langgraph é mais didático e fácil de entender o impacto do human in the loop.
+Para executar basta executar o comando no ambiente virtual.
+```bash
+python -m app.main
+```
