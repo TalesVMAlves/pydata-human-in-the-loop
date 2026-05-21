@@ -14,4 +14,4 @@
 - Para o agente de Gmail o tipo de aplicativo será App para computador
 - Crie o ID do cliente OAuth e faça o download do Json
 
-Mova o json da sua pasta de downloads para dentro do projeto que irá utilizar o serviço, uma boa prática é renomear esse arquivo para "credentials.json" por exemplo e adicioná-lo ao .gitignore ou .dockerignore
+Mova o json da sua pasta de downloads para dentro do projeto que irá utilizar o serviço, uma boa prática é renomear esse arquivo para "credentials.json" por exemplo e adicioná-lo ao .gitignore e/ou .dockerignore
