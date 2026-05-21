@@ -13,16 +13,19 @@ def preparar_respostas_em_lote(respostas: list) -> str:
     if not respostas:
         return "Nenhuma resposta fornecida no plano."
 
-    plano_formatado = "**Plano de Respostas em Lote Gerado:**\n"
+    plano_formatado = "**[ PLANO DE RESPOSTAS EM LOTE GERADO ]**\n"
     for i, resp in enumerate(respostas, 1):
         resp_dict = resp.model_dump() if hasattr(resp, "model_dump") else resp
+        
+        corpo_original = resp_dict.get('corpo', '')
+        corpo_em_citacao = corpo_original.replace("\n", "\n> ")
         
         plano_formatado += (
             f"\n**{i}. Destinatário:** {resp_dict.get('destinatario', 'Desconhecido')}\n"
             f"**Assunto:** {resp_dict.get('assunto', 'Sem Assunto')}\n"
             f"**Mensagem:**\n"
-            f"> {resp_dict.get('corpo', '')}\n"
-            f"{'='*40}"
+            f"> {corpo_em_citacao}\n"
+            f"{'='*40}\n"
         )
     return plano_formatado
 

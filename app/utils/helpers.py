@@ -28,8 +28,9 @@ def buscar_e_formatar_emails(max_resultados: int = 5) -> str:
             
             assunto = next((h['value'] for h in cabs if h['name'] == 'Subject'), "Sem Assunto")
             remetente = next((h['value'] for h in cabs if h['name'] == 'From'), "Desconhecido")
+            trecho = txt.get('snippet', 'Sem conteúdo de texto...')
             
-            resumo.append(f"- ID: {msg['id']} | De: {remetente} | Assunto: {assunto}")
+            resumo.append(f"- ID: {msg['id']} | De: {remetente} | Assunto: {assunto} | Trecho: {trecho}")
             
         return "\n".join(resumo)
         
